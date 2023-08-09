@@ -36,7 +36,7 @@ public class BaseTest {
 
     @After
     public void delete() {
-        //driver.quit();
+        driver.quit();
         deleteUser();
     }
 
