@@ -9,7 +9,6 @@ import ru.yandex.practicum.generator.UserGenerator;
 import ru.yandex.practicum.user.User;
 
 import static io.restassured.RestAssured.given;
-import static ru.yandex.practicum.constant.ButtonNameForLogin.*;
 
 public class BaseTest {
     private static final String SITE = "https://stellarburgers.nomoreparties.site";
@@ -25,13 +24,13 @@ public class BaseTest {
     @Before
     public void create() {
         driver = new ChromeDriver();
+        driver.get(SITE);
         homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
         registerPage = new RegisterPage(driver);
         restorePasswordPage = new RestorePasswordPage(driver);
         userPage = new UserPage(driver);
         createUser();
-        driver.get(SITE);
     }
 
     @After
@@ -62,16 +61,20 @@ public class BaseTest {
         switch (buttonName) {
             case LOGIN_ON_HOME_PAGE:
                 homePage.clickLoginButton();
+                break;
             case LOGIN_ON_LK:
                 homePage.clickLk();
+                break;
             case LOGIN_ON_REGISTER_PAGE:
                 homePage.clickLk();
                 loginPage.clickRegister();
                 registerPage.clickLogin();
+                break;
             case LOGIN_ON_RECOVERY_PASSWORD:
                 homePage.clickLk();
                 loginPage.clickRestorePasswordButton();
                 restorePasswordPage.clickLoginButton();
+                break;
         }
     }
 }

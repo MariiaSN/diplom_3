@@ -1,3 +1,4 @@
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -9,7 +10,7 @@ import static ru.yandex.practicum.constant.ButtonNameForLogin.*;
 @RunWith(Parameterized.class)
 public class LoginTest extends BaseTest {
     public static final String HOME_URL = "https://stellarburgers.nomoreparties.site/";
-    private ButtonNameForLogin nameButtonLogin;
+    private final ButtonNameForLogin nameButtonLogin;
 
     public LoginTest(ButtonNameForLogin nameButtonLogin) {
         this.nameButtonLogin = nameButtonLogin;
@@ -26,6 +27,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Авторизация в ЛК")
     public void loginTest() {
         quiteButton(nameButtonLogin);
 

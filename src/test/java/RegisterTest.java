@@ -1,4 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RegisterTest {
     public static final String INCORRECT_PASSWORD_EXCEPTION = "Некорректный пароль";
-    private UserGenerator userGenerator = new UserGenerator();
+    private final UserGenerator userGenerator = new UserGenerator();
     private HomePage homePage;
     private LoginPage loginPage;
     private RegisterPage registerPage;
@@ -39,9 +41,9 @@ public class RegisterTest {
     }
 
     @Test
+    @DisplayName("Корректная регистрация")
     public void createCorrectUser() {
-        homePage.clickLk();
-        loginPage.clickRegister();
+        toRegisterPage();
         registerPage.setName(userGenerator.getName())
                 .setEmail(userGenerator.getEmail())
                 .setPassword(userGenerator.getValidPassword())
@@ -55,9 +57,9 @@ public class RegisterTest {
     }
 
     @Test
+    @DisplayName("Регистрация с некорректным паролем (< 6 символов)")
     public void createUserIncorrectPassword() {
-        homePage.clickLk();
-        loginPage.clickRegister();
+        toRegisterPage();
         registerPage.setName(userGenerator.getName())
                 .setEmail(userGenerator.getEmail())
                 .setPassword(userGenerator.getInvalidPassword())
@@ -66,5 +68,11 @@ public class RegisterTest {
         actual = registerPage.getTextException();
 
         assertEquals(INCORRECT_PASSWORD_EXCEPTION, actual);
+    }
+
+    @Step("Переход на форму регистрации")
+    private void toRegisterPage() {
+        homePage.clickLk();
+        loginPage.clickRegister();
     }
 }
